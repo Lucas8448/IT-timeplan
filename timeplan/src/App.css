@@ -1,0 +1,63 @@
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.timetable {
+  max-width: 800px;
+  margin: auto;
+}
+
+.day {
+  border: 2px solid #ccc;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.day h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.session,
+.break {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.session:last-child {
+  border-bottom: none;
+}
+
+.session div,
+.break div {
+  flex: 1;
+  text-align: center;
+}
+
+.session div {
+  padding: 5px;
+  border-right: 1px solid #eee;
+}
+
+.session div:last-child {
+  border-right: none;
+}
+
+.break {
+  background-color: #e6e6e6;
+  color: #666;
+  font-style: italic;
+}
+
+.break div {
+  flex: 1;
+  text-align: center;
+}
