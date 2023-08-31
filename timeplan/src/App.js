@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
 
 const sessions = [
@@ -240,8 +240,8 @@ const Session = ({ detail }) => (
   </div>
 );
 
-const Day = ({ day, details }) => (
-  <div className={isCurrentDay(day) ? 'current-day' : 'day'}>
+const Day = React.forwardRef(({ day, details }, ref) => (
+  <div ref={ref} className={isCurrentDay(day) ? 'current-day' : 'day'}>
     <h2>{day}</h2>
     {details.map((detail, index) => {
       const nextDetail = details[index + 1];
@@ -262,17 +262,32 @@ const Day = ({ day, details }) => (
       );
     })}
   </div>
-);
+));
 
-const App = () => (
-  <div>
-    <h1 className="title">Timeplan</h1>
-    <div className="timetable">
-      {sessions.map((session, index) => (
-        <Day key={index} day={session.day} details={session.details} />
-      ))}
+const App = () => {
+  const currentDayRef = useRef(null);
+
+  useEffect(() => {
+    if (currentDayRef.current) {
+      currentDayRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, []);
+
+  return (
+    <div>
+      <h1 className="title">Timeplan</h1>
+      <div className="timetable">
+        {sessions.map((session, index) => (
+          <Day 
+            key={index} 
+            day={session.day} 
+            details={session.details} 
+            ref={isCurrentDay(session.day) ? currentDayRef : null}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default App;
