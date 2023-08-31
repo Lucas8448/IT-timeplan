@@ -220,8 +220,19 @@ const parseTime = (timeStr) => {
   return hour * 60 + minute;
 };
 
+const isCurrentDay = (day) => {
+  const currentDay = new Date().toLocaleString('no-NB', { weekday: 'long' }).toLowerCase();
+  return currentDay === day.toLowerCase();
+};
+
+const isCurrentSession = (start, end) => {
+  const currentTime = new Date();
+  const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+  return currentMinutes >= start && currentMinutes <= end;
+};
+
 const Session = ({ detail }) => (
-  <div className="session">
+  <div className={`session ${isCurrentSession(parseTime(detail.time.split(' - ')[0]), parseTime(detail.time.split(' - ')[1])) ? 'current-session' : ''}`}>
     <div>{detail.time}</div>
     <div>{detail.classroom}</div>
     <div>{detail.subject}</div>
@@ -230,7 +241,7 @@ const Session = ({ detail }) => (
 );
 
 const Day = ({ day, details }) => (
-  <div className="day">
+  <div className={isCurrentDay(day) ? 'current-day' : 'day'}>
     <h2>{day}</h2>
     {details.map((detail, index) => {
       const nextDetail = details[index + 1];
@@ -246,7 +257,7 @@ const Day = ({ day, details }) => (
       return (
         <div key={index}>
           <Session detail={detail} />
-          {breakTime > 0 && <div className="break">{`Pause: ${breakTime} minutter`}</div>}
+          {breakTime > 0 && <div className={`break ${isCurrentSession(parseTime(nextDetail.time.split(' - ')[0]), parseTime(detail.time.split(' - ')[1])) ? 'current-break' : ''}`}>{`Pause: ${breakTime} minutter`}</div>}
         </div>
       );
     })}
@@ -255,7 +266,7 @@ const Day = ({ day, details }) => (
 
 const App = () => (
   <div>
-    <h1 class="title">Timeplan</h1>
+    <h1 className="title">Timeplan</h1>
     <div className="timetable">
       {sessions.map((session, index) => (
         <Day key={index} day={session.day} details={session.details} />
