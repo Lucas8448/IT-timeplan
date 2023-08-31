@@ -165,7 +165,7 @@ const sessions = [
 "teacher": "Ajdin"
 },
 {
-"time": "13:50 - 14:35",
+"time": "13:40 - 14:15",
 "classroom": "Sal 3",
 "subject": "Kroppsøving",
 "teacher": "Ajdin"
