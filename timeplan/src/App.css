@@ -79,3 +79,8 @@
 .current-day .session.current-session div {
   color: #d25858;
 }
+
+/* set current break to have a red text colour */
+.current-day .current-break {
+  color: #d25858;
+}

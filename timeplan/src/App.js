@@ -257,7 +257,7 @@ const Day = React.forwardRef(({ day, details }, ref) => (
       return (
         <div key={index}>
           <Session detail={detail} />
-          {breakTime > 0 && <div className={`break ${isCurrentSession(parseTime(nextDetail.time.split(' - ')[0]), parseTime(detail.time.split(' - ')[1])) ? 'current-break' : ''}`}>{`Pause: ${breakTime} minutter`}</div>}
+          {breakTime > 0 && <div className={`break ${isCurrentSession(parseTime(detail.time.split(' - ')[1]), parseTime(nextDetail.time.split(' - ')[0])) ? 'current-break' : ''}`}>{`Pause: ${breakTime} minutter`}</div>}
         </div>
       );
     })}
