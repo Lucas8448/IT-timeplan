@@ -1,0 +1,86 @@
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.timetable {
+  max-width: 800px;
+  margin: auto;
+  border-radius: 2%;
+}
+
+.day {
+  border: 2px solid #A6A5A4;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #40403F;
+  color: #D9D9D9;
+}
+
+.current-day {
+  border: 2px solid #d25858;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #40403F;
+  color: #D9D9D9;
+}
+
+.day h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: #BFBDBA;
+}
+
+.break {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-radius: 10px;
+  justify-content: space-between;
+  text-align: center;
+  padding: 10px;
+  background-color: #BFBDBA;
+  color: #40403F;
+}
+
+.session {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.session:last-child {
+  border-bottom: none;
+}
+
+.session div,
+.break div {
+  flex: 1;
+  text-align: center;
+  color: #A6A5A4;
+}
+
+.session div {
+  padding: 5px;
+  border-right: 1px solid #D9D9D9;
+}
+
+.session div:last-child {
+  border-right: none;
+}
+
+/* set current session to have a red text colour */
+.current-day .session.current-session div {
+  color: #d25858;
+}
+
+/* set current break to have a red text colour */
+.current-day .current-break {
+  color: #d25858;
+}
