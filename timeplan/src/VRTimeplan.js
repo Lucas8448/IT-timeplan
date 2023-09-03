@@ -226,9 +226,6 @@ const DayCube = ({ day, position }) => {
     <mesh position={position}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color="orange" />
-      {/* Uncomment once basic geometry works */}
-      {/* <primitive object={new TextGeometry(day, { size: 0.2, height: 0.1 })} /> */}
-      {/* <meshStandardMaterial color="black" /> */}
     </mesh>
   );
 };
