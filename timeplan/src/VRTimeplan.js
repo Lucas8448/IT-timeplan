@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useThree, extend } from '@react-three/fiber';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
-import { Vector3 } from 'three';
-import { extend } from '@react-three/fiber';
+import { Vector3, PerspectiveCamera } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import './VRTimeplan.css';
+
 extend({ TextGeometry });
 
 const sessions = [
@@ -225,15 +226,21 @@ const DayCube = ({ day, position }) => {
     <mesh position={position}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color="orange" />
-      <primitive object={new TextGeometry(day, { size: 0.2, height: 0.1 })} />
-      <meshStandardMaterial color="black" />
+      {/* Uncomment once basic geometry works */}
+      {/* <primitive object={new TextGeometry(day, { size: 0.2, height: 0.1 })} /> */}
+      {/* <meshStandardMaterial color="black" /> */}
     </mesh>
   );
 };
 
-const VRButtonContainer = () => {
-  const { gl } = useThree(); // Access the WebGL renderer
+const Camera = () => {
+  const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+  return <primitive object={camera} />;
+};
 
+const VRButtonContainer = () => {
+  const { gl } = useThree();
   useEffect(() => {
     document.body.appendChild(VRButton.createButton(gl));
   }, [gl]);
@@ -245,9 +252,10 @@ const VRTimeplan = () => {
   return (
     <div id="canvas-container">
       <Canvas>
+        <Camera />
         <VRButtonContainer />
         <ambientLight />
-        <pointLight position={[10, 10, 10]} />
+        <directionalLight position={[1, 1, 1]} />
         {sessions.map((session, index) => (
           <DayCube key={index} day={session.day} position={new Vector3(index * 2 - 5, 1, -5)} />
         ))}
