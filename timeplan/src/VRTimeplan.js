@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { Canvas, useThree, extend } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
-import { Vector3, PerspectiveCamera } from 'three';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import { Vector3 } from 'three';
+import { Text } from '@react-three/drei';
 import './VRTimeplan.css';
-
-extend({ TextGeometry });
 
 const sessions = [
   {
@@ -223,17 +221,45 @@ const sessions = [
 
 const DayCube = ({ day, position }) => {
   return (
-    <mesh position={position}>
+    <mesh position={position} castShadow>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="orange" />
+      <meshStandardMaterial color={'#d8d8d8'} />
+      <DayText day={day} position={[0, 0, 0.5]} />
+      <SessionText day={day} position={[0, 0, -0.5]} />
     </mesh>
   );
 };
 
-const Camera = () => {
-  const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
-  return <primitive object={camera} />;
+const DayText = ({ day, position }) => {
+  return (
+    <Text position={position} fontSize={0.2}>
+      {day}
+    </Text>
+  );
+};
+
+const SessionText = ({ day, position }) => {
+  const { details } = sessions.find((session) => session.day === day);
+  return (
+    <>
+      {details.map((detail, index) => (
+        <group position={[position[0], position[1] - index * 1.2, position[2]]} key={index}>
+          <Text position={[0, 0.3, 0]} fontSize={0.1}>
+            {detail.time}
+          </Text>
+          <Text position={[0, 0.2, 0]} fontSize={0.1}>
+            {detail.classroom}
+          </Text>
+          <Text position={[0, 0.1, 0]} fontSize={0.1}>
+            {detail.subject}
+          </Text>
+          <Text position={[0, 0, 0]} fontSize={0.1}>
+            {detail.teacher}
+          </Text>
+        </group>
+      ))}
+    </>
+  );
 };
 
 const VRButtonContainer = () => {
@@ -248,8 +274,7 @@ const VRButtonContainer = () => {
 const VRTimeplan = () => {
   return (
     <div id="canvas-container">
-      <Canvas>
-        <Camera />
+      <Canvas camera={{ position: [0, 0, 5] }}>
         <VRButtonContainer />
         <ambientLight />
         <directionalLight position={[1, 1, 1]} />
