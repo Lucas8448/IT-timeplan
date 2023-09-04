@@ -221,42 +221,40 @@ const sessions = [
 
 const DayCube = ({ day, position }) => {
   return (
-    <mesh position={position} castShadow>
+    <mesh position={position} castShadow scale={[1, 1, 0.1]}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={'green'} />
-      <DayText day={day} position={[0, 0, 0.51]} />
-      <SessionText day={day} position={[0, 0, -0.5]} />
+      <Text position={[0, 0, 0.51]} fontSize={0.2}>
+        {day}
+      </Text>
+      <SessionPanel day={day} position={[0, 0, -0.05]} />
     </mesh>
   );
 };
 
-const DayText = ({ day, position }) => {
-  return (
-    <Text position={position} fontSize={0.2}>
-      {day}
-    </Text>
-  );
-};
+const SessionDetail = ({ detail, position }) => (
+  <group position={position}>
+    <mesh position={[0, 0, 0]} scale={[0.99, 0.99, 0.1]}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={'white'} />
+    </mesh>
+    <Text position={[0, 0.3, 0.1]} fontSize={0.1} color="black">{detail.time}</Text>
+    <Text position={[0, 0.2, 0.1]} fontSize={0.1} color="black">{detail.classroom}</Text>
+    <Text position={[0, 0.1, 0.1]} fontSize={0.1} color="black">{detail.subject}</Text>
+    <Text position={[0, 0, 0.1]} fontSize={0.1} color="black">{detail.teacher}</Text>
+  </group>
+);
 
-const SessionText = ({ day, position }) => {
+const SessionPanel = ({ day, position }) => {
   const { details } = sessions.find((session) => session.day === day);
   return (
     <>
       {details.map((detail, index) => (
-        <group position={[position[0], position[1] - index * 1.2, position[2]]} key={index}>
-          <Text position={[0, 0.3, 0]} fontSize={0.1}>
-            {detail.time}
-          </Text>
-          <Text position={[0, 0.2, 0]} fontSize={0.1} font>
-            {detail.classroom}
-          </Text>
-          <Text position={[0, 0.1, 0]} fontSize={0.1}>
-            {detail.subject}
-          </Text>
-          <Text position={[0, 0, 0]} fontSize={0.1}>
-            {detail.teacher}
-          </Text>
-        </group>
+        <SessionDetail
+          key={index}
+          detail={detail}
+          position={[position[0], position[1] - index * 1.2, position[2]]}
+        />
       ))}
     </>
   );
