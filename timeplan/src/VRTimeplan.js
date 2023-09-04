@@ -223,8 +223,8 @@ const DayCube = ({ day, position }) => {
   return (
     <mesh position={position} castShadow>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={'#d8d8d8'} />
-      <DayText day={day} position={[0, 0, 0.5]} />
+      <meshStandardMaterial color={'green'} />
+      <DayText day={day} position={[0, 0, 0.51]} />
       <SessionText day={day} position={[0, 0, -0.5]} />
     </mesh>
   );
@@ -247,7 +247,7 @@ const SessionText = ({ day, position }) => {
           <Text position={[0, 0.3, 0]} fontSize={0.1}>
             {detail.time}
           </Text>
-          <Text position={[0, 0.2, 0]} fontSize={0.1}>
+          <Text position={[0, 0.2, 0]} fontSize={0.1} font>
             {detail.classroom}
           </Text>
           <Text position={[0, 0.1, 0]} fontSize={0.1}>
